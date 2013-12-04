@@ -6,10 +6,11 @@
     tools:context=".MainActivity$PlaceholderFragment">
 
     <com.samsung.staggeredgridview.StaggeredGridView
-        xmlns:staggered="http://schemas.android.com/res/com.samsung.staggeredgridview.StaggeredGridView"
+        xmlns:staggered="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        staggered:gridOrientation="vertical"
+        staggered:gridOrientation="horizontal"
+        staggered:itemMargin="20dp"
         android:id="@+id/gridView" />
 
 </RelativeLayout>

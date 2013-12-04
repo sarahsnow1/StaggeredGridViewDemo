@@ -3,8 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity" >
     
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+    <item android:id="@+id/action_vertical"
+        android:title="@string/action_vertical"
         android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_horizontal"
+        android:title="@string/action_horizontal"
+        android:orderInCategory="101"
         app:showAsAction="never" />
 </menu>

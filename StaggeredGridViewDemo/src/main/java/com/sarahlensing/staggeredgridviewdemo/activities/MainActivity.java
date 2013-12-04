@@ -23,14 +23,17 @@ import java.util.Random;
 
 public class MainActivity extends ActionBarActivity {
 
+    PlaceholderFragment mPlaceholderFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mPlaceholderFragment = new PlaceholderFragment();
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
+                    .add(R.id.container, mPlaceholderFragment)
                     .commit();
         }
     }
@@ -49,11 +52,7 @@ public class MainActivity extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return mPlaceholderFragment.onOptionsItemSelected(item);
     }
 
     /**
@@ -82,6 +81,20 @@ public class MainActivity extends ActionBarActivity {
             buildGridSizes();
             mGridView.setAdapter(mGridAdapter);
             super.onViewCreated(view, savedInstanceState);
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id == R.id.action_horizontal) {
+                mGridView.setGridOrientation(StaggeredGridView.STAGGERED_GRID_ORIENTATION_HORIZONTAL);
+                return true;
+            }
+            else if (id == R.id.action_vertical) {
+                mGridView.setGridOrientation(StaggeredGridView.STAGGERED_GRID_ORIENTATION_VERTICAL);
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
         }
 
         private void buildGridSizes() {
