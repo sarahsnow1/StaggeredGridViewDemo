@@ -14,25 +14,31 @@ repositories {
 
 android {
     compileSdkVersion 18
-    buildToolsVersion "18.1.1"
+    buildToolsVersion '18.1.1'
 
     defaultConfig {
         minSdkVersion 7
         targetSdkVersion 19
     }
-    buildTypes {
-        release {
-            runProguard true
-            proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
-        }
-    }
-    productFlavors {
-        defaultFlavor {
-            proguardFile 'proguard-rules.txt'
-        }
-    }
+//    buildTypes {
+//        release {
+//            runProguard true
+//        }
+//    }
+//    productFlavors {
+//        defaultFlavor {
+//            proguardFile 'proguard-rules.txt'
+//        }
+//    }
+
+//    release {
+//        runProguard true
+//        proguardFile 'proguard-rules.txt'
+//        proguardFile getDefaultProguardFile('proguard-android-optimize.txt')
+//    }
 }
 
 dependencies {
-	compile 'com.android.support:appcompat-v7:+'
+    compile 'com.android.support:appcompat-v7:+'
+    compile project(':submodules:StaggeredGridView:StaggeredGridView')
 }

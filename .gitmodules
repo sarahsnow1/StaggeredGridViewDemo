@@ -1,0 +1,3 @@
+[submodule "submodules/StaggeredGridView"]
+	path = submodules/StaggeredGridView
+	url = git@github.com:sarahlensing/StaggeredGridView.git
