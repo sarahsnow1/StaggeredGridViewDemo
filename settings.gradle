@@ -1,2 +1,2 @@
-include ':StaggeredGridViewDemo'
-include ':submodules:StaggeredGridView:StaggeredGridView'
+include 'app'
+include 'submodules:StaggeredGridView:library'

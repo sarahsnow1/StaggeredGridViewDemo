@@ -40,5 +40,5 @@ android {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:+'
-    compile project(':submodules:StaggeredGridView:StaggeredGridView')
+    compile project(':submodules:StaggeredGridView:library')
 }
