@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         staggered:gridOrientation="horizontal"
         staggered:itemMargin="20dp"
+        staggered:numPagesToPreload="2"
         android:id="@+id/gridView" />
 
 </RelativeLayout>
