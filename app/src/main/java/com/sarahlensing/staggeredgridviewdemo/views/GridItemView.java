@@ -2,7 +2,6 @@ package com.sarahlensing.staggeredgridviewdemo.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.samsung.staggeredgridview.ItemSize;
@@ -29,6 +28,11 @@ public class GridItemView extends RelativeLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(itemSize.width, itemSize.height);
+        if (isInEditMode()) {
+
+        }
+        else {
+            setMeasuredDimension(itemSize.width, itemSize.height);
+        }
     }
 }

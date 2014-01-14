@@ -114,21 +114,39 @@ public class MainActivity extends ActionBarActivity {
                 mSectionSizes.clear();
             }
 
+            int sm = 430;
+            int med = 635;
+            int lg = 860;
+
             Random random = new Random();
             mItemSizes = new ArrayList<ItemSize>();
             for (int i = 0; i < 200; i++) {
-                int width = (random.nextInt(2)+1) * 200;
-                int height = (random.nextInt(1)+1) * 200;
-                mItemSizes.add(new ItemSize(width, height));
+
+                //For randomly sized items
+//                int width = (random.nextInt(2)+1) * 200;
+//                int height = (random.nextInt(1)+1) * 200;
+//                mItemSizes.add(new ItemSize(width, height));
+
+                //For a nice, fiting grid
+                mItemSizes.add(new ItemSize(sm, sm));
+                mItemSizes.add(new ItemSize(lg, sm));
+                mItemSizes.add(new ItemSize(sm, sm));
+                mItemSizes.add(new ItemSize(med, lg));
+                mItemSizes.add(new ItemSize(med, sm));
+                mItemSizes.add(new ItemSize(sm, sm));
+                mItemSizes.add(new ItemSize(sm, sm));
+                mItemSizes.add(new ItemSize(med, lg));
+                mItemSizes.add(new ItemSize(lg, lg));
             }
 
+            int sectionSize = 200;
             mSectionSizes = new ArrayList<ItemSize>();
             for (int i = 0; i < 10; i++) {
                 if (orientation.equals(StaggeredGridView.STAGGERED_GRID_ORIENTATION_HORIZONTAL)) {
-                    mSectionSizes.add(new ItemSize(200, getActivity().getWindowManager().getDefaultDisplay().getHeight() - 250));
+                    mSectionSizes.add(new ItemSize(sectionSize, getActivity().getWindowManager().getDefaultDisplay().getHeight()));
                 }
                 else {
-                    mSectionSizes.add(new ItemSize(getActivity().getWindowManager().getDefaultDisplay().getWidth() - 250, 200));
+                    mSectionSizes.add(new ItemSize(getActivity().getWindowManager().getDefaultDisplay().getWidth(), sectionSize));
                 }
             }
         }
@@ -208,7 +226,7 @@ public class MainActivity extends ActionBarActivity {
                 ItemSize itemSize = mSectionSizes.get(position);
                 holder.gridItemView.itemSize = itemSize;
                 holder.gridItemView.setBackgroundColor(Color.BLUE);
-                holder.titleView.setText(String.valueOf(position));
+                holder.titleView.setText("Section:"+String.valueOf(position));
                 return convertView;
             }
 
