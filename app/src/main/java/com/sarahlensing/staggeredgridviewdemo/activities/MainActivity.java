@@ -21,6 +21,8 @@ import com.sarahlensing.staggeredgridviewdemo.views.GridItemView;
 import java.util.ArrayList;
 import java.util.Random;
 
+
+
 public class MainActivity extends ActionBarActivity {
 
     PlaceholderFragment mPlaceholderFragment;
@@ -118,25 +120,29 @@ public class MainActivity extends ActionBarActivity {
             int med = 635;
             int lg = 860;
 
+            boolean useRnd = false;
+            int levelOfRnd = 3;
+
             Random random = new Random();
             mItemSizes = new ArrayList<ItemSize>();
             for (int i = 0; i < 200; i++) {
 
-                //For randomly sized items
-//                int width = (random.nextInt(2)+1) * 200;
-//                int height = (random.nextInt(1)+1) * 200;
-//                mItemSizes.add(new ItemSize(width, height));
-
-                //For a nice, fiting grid
-                mItemSizes.add(new ItemSize(sm, sm));
-                mItemSizes.add(new ItemSize(lg, sm));
-                mItemSizes.add(new ItemSize(sm, sm));
-                mItemSizes.add(new ItemSize(med, lg));
-                mItemSizes.add(new ItemSize(med, sm));
-                mItemSizes.add(new ItemSize(sm, sm));
-                mItemSizes.add(new ItemSize(sm, sm));
-                mItemSizes.add(new ItemSize(med, lg));
-                mItemSizes.add(new ItemSize(lg, lg));
+                if (useRnd) {
+                    int width = (random.nextInt(levelOfRnd)+1) * 200;
+                    int height = (random.nextInt(levelOfRnd-1)+1) * 200;
+                    mItemSizes.add(new ItemSize(width, height));
+                }
+                else {
+                    mItemSizes.add(new ItemSize(sm, sm));
+                    mItemSizes.add(new ItemSize(lg, sm));
+                    mItemSizes.add(new ItemSize(sm, sm));
+                    mItemSizes.add(new ItemSize(med, lg));
+                    mItemSizes.add(new ItemSize(med, sm));
+                    mItemSizes.add(new ItemSize(sm, sm));
+                    mItemSizes.add(new ItemSize(sm, sm));
+                    mItemSizes.add(new ItemSize(med, lg));
+                    mItemSizes.add(new ItemSize(lg, lg));
+                }
             }
 
             int sectionSize = 200;
@@ -177,7 +183,7 @@ public class MainActivity extends ActionBarActivity {
             }
 
             @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
+            public View getView(int section, int position, View convertView, ViewGroup parent) {
                 ViewHolder holder;
                 if (convertView == null) {
                     LayoutInflater layoutInflator = LayoutInflater.from(getActivity().getBaseContext());
@@ -195,7 +201,8 @@ public class MainActivity extends ActionBarActivity {
                 holder.gridItemView.itemSize = itemSize;
                 holder.gridItemView.setBackgroundColor(nextRandomColor());
                 holder.titleView.setText(String.valueOf(position));
-                holder.subtitleView.setText(String.valueOf(itemSize.width) + "x" + String.valueOf(itemSize.height));
+                holder.subtitleView.setText(String.valueOf(itemSize.width) + " x " + String.valueOf(itemSize.height));
+
                 return convertView;
             }
 
