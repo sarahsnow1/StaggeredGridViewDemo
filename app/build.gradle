@@ -40,5 +40,11 @@ android {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:+'
+
+    //StaggeredGridView//
+    //1.Pull latest from Maven Central
+    //compile 'com.sarahlensing.staggeredgridview:library:0.0.3'
+    //--or--
+    //2.Use gradle library dependency (notice that in this case, it's also a git submodule)
     compile project(':submodules:StaggeredGridView:library')
 }
