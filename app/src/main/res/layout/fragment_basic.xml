@@ -1,17 +1,19 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:background="@android:color/darker_gray"
-    tools:context=".MainActivity$PlaceholderFragment">
+    tools:context=".MainActivity$PlaceholderFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <com.samsung.staggeredgridview.StaggeredGridView
+    <com.sarahlensing.staggeredgridview.StaggeredGridView
         xmlns:staggered="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        staggered:gridOrientation="vertical"
+        staggered:gridOrientation="horizontal"
         staggered:itemMargin="1dp"
         staggered:numPagesToPreload="2"
         android:id="@+id/gridView" />
 
-</RelativeLayout>
+</FrameLayout>
+ <!--staggered:sectionsSticky="true"-->

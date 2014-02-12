@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
-import com.samsung.staggeredgridview.ItemSize;
+import com.sarahlensing.staggeredgridview.ItemSize;
 
 /**
  * Created by sarahlensing on 11/30/13.
