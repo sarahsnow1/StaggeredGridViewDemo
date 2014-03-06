@@ -2,11 +2,13 @@ package com.sarahlensing.staggeredgridviewdemo.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sarahlensing.staggeredgridview.ItemSize;
 import com.sarahlensing.staggeredgridview.StaggeredGridAdapter;
@@ -17,12 +19,16 @@ import com.sarahlensing.staggeredgridviewdemo.views.GridItemView;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by sarahlensing on 2/12/14.
  */
 
 public class BasicFragment extends android.support.v4.app.Fragment {
+
+    private static final String TAG = "BasicFragment";
 
     StaggeredGridView mGridView;
     ArrayList<ItemSize> mItemSizes;
@@ -59,6 +65,7 @@ public class BasicFragment extends android.support.v4.app.Fragment {
         }
         mGridView.setAdapter(mGridSectionAdapter);
         buildGridSizes();
+        startReloadTimer();
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -98,6 +105,14 @@ public class BasicFragment extends android.support.v4.app.Fragment {
             mSectionSizes.clear();
         }
 
+        mItemSizes = new ArrayList<ItemSize>();
+        mItemSizes.addAll(getItemSizes(orientation));
+
+        mSectionSizes = new ArrayList<ItemSize>();
+        mSectionSizes.addAll(getSectionItemSizes(orientation));
+    }
+
+    private ArrayList<ItemSize> getItemSizes(String orientation) {
         int sm = 430;
         int med = 635;
         int lg = 860;
@@ -105,52 +120,101 @@ public class BasicFragment extends android.support.v4.app.Fragment {
         boolean useRnd = true;
         int levelOfRnd = 3;
 
-        mItemSizes = new ArrayList<ItemSize>();
+        ArrayList<ItemSize> itemSizes = new ArrayList<ItemSize>();
         for (int i = 0; i < 200; i++) {
 
             if (useRnd) {
                 int width = (random.nextInt(levelOfRnd)+1) * 200;
                 int height = (random.nextInt(levelOfRnd-1)+1) * 200;
-                mItemSizes.add(new ItemSize(width, height));
+                itemSizes.add(new ItemSize(width, height));
             }
             else {
-                mItemSizes.add(new ItemSize(sm, sm));
-                mItemSizes.add(new ItemSize(lg, sm));
-                mItemSizes.add(new ItemSize(sm, sm));
-                mItemSizes.add(new ItemSize(med, lg));
-                mItemSizes.add(new ItemSize(med, sm));
-                mItemSizes.add(new ItemSize(sm, sm));
-                mItemSizes.add(new ItemSize(sm, sm));
-                mItemSizes.add(new ItemSize(med, lg));
-                mItemSizes.add(new ItemSize(lg, lg));
-                mItemSizes.add(new ItemSize(sm, sm));
-                mItemSizes.add(new ItemSize(lg, sm));
-                mItemSizes.add(new ItemSize(sm, sm));
-                mItemSizes.add(new ItemSize(med, lg));
-                mItemSizes.add(new ItemSize(med, sm));
-                mItemSizes.add(new ItemSize(sm, sm));
-                mItemSizes.add(new ItemSize(sm, sm));
-                mItemSizes.add(new ItemSize(med, lg));
-                mItemSizes.add(new ItemSize(lg, lg));
+                itemSizes.add(new ItemSize(sm, sm));
+                itemSizes.add(new ItemSize(lg, sm));
+                itemSizes.add(new ItemSize(sm, sm));
+                itemSizes.add(new ItemSize(med, lg));
+                itemSizes.add(new ItemSize(med, sm));
+                itemSizes.add(new ItemSize(sm, sm));
+                itemSizes.add(new ItemSize(sm, sm));
+                itemSizes.add(new ItemSize(med, lg));
+                itemSizes.add(new ItemSize(lg, lg));
+                itemSizes.add(new ItemSize(sm, sm));
+                itemSizes.add(new ItemSize(lg, sm));
+                itemSizes.add(new ItemSize(sm, sm));
+                itemSizes.add(new ItemSize(med, lg));
+                itemSizes.add(new ItemSize(med, sm));
+                itemSizes.add(new ItemSize(sm, sm));
+                itemSizes.add(new ItemSize(sm, sm));
+                itemSizes.add(new ItemSize(med, lg));
+                itemSizes.add(new ItemSize(lg, lg));
             }
         }
+        return itemSizes;
+    }
 
+    private ArrayList<ItemSize> getSectionItemSizes(String orientation) {
         int sectionSize = 200;
         int maxHeight = getActivity().getWindowManager().getDefaultDisplay().getHeight()-2*mGridView.getItemMargin();
         int maxWidth = getActivity().getWindowManager().getDefaultDisplay().getWidth()-2*mGridView.getItemMargin();
-        mSectionSizes = new ArrayList<ItemSize>();
+        ArrayList<ItemSize> sectionSizes = new ArrayList<ItemSize>();
         for (int i = 0; i < 10; i++) {
             if (orientation.equals(StaggeredGridView.STAGGERED_GRID_ORIENTATION_HORIZONTAL)) {
-                mSectionSizes.add(new ItemSize(sectionSize, maxHeight));
+                sectionSizes.add(new ItemSize(sectionSize, maxHeight));
             }
             else {
-                mSectionSizes.add(new ItemSize(maxWidth, sectionSize));
+                sectionSizes.add(new ItemSize(maxWidth, sectionSize));
             }
         }
+        return sectionSizes;
     }
 
     private int nextRandomColor() {
         return Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256));
+    }
+
+    private void removeSomeItems() {
+        for (int i = 0; i < 20; i++) {
+            mItemSizes.remove(0);
+        }
+        mSectionSizes.remove(0);
+    }
+
+    private void appendMoreItems() {
+        String orientation = mGridView.getGridOrientation();
+        mItemSizes.addAll(getItemSizes(orientation));
+        mSectionSizes.addAll(getSectionItemSizes(orientation));
+    }
+
+    private void startReloadTimer() {
+
+        Timer timer = new Timer("reloadTimer", true);
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                BasicFragment.this.getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+
+                        //for testing how grid handles removed items
+                        //removeSomeItems();
+
+                        //for testing how grid handles additional items
+                        appendMoreItems();
+
+                        Toast.makeText(BasicFragment.this.getActivity(), "About to reload", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "About to notifyDataSetChanged()");
+
+                        mGridView.reloadGrid();
+
+                        //more efficient than reloadGrid if we are guaranteed that we are appending data
+                        //mGridView.reloadGridAppendItems();
+
+                        Log.d(TAG, "notifyDataSetChanged() finished.");
+                    }
+                });
+
+            }
+        };
+        timer.schedule(timerTask, 10000);
     }
 
     StaggeredGridSectionAdapter mGridSectionAdapter = new StaggeredGridSectionAdapter() {
